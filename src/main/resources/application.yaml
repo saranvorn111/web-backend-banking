@@ -1,2 +1,10 @@
 server:
   port: 9090
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    h2:
+      console:
+        enabled: true
