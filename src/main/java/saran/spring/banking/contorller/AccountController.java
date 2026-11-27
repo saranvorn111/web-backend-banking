@@ -1,11 +1,12 @@
 package saran.spring.banking.contorller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import saran.spring.banking.entity.Account;
+import saran.spring.banking.dto.AccountRequest;
+import saran.spring.banking.dto.AccountResponse;
 import saran.spring.banking.service.AccountService;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/accounts")
@@ -18,27 +19,28 @@ public class AccountController {
     }
 
     @PostMapping
-    public Account crateAccount(@RequestBody Account account) {
-        return accountService.saveAccount(account);
+    @ResponseStatus(HttpStatus.CREATED)
+    public AccountResponse createAccount(@RequestBody AccountRequest request) {
+        return accountService.saveAccount(request);
     }
 
     @GetMapping
-    public List<Account> getAll() {
+    public List<AccountResponse> getAll() {
         return accountService.getAll();
     }
 
     @GetMapping("/{id}")
-    public Optional<Account> findById(@PathVariable Integer id) {
+    public AccountResponse findById(@PathVariable Integer id) {
         return accountService.getAccountById(id);
     }
 
     @PutMapping("/{id}")
-    public Account updatedAccount(@PathVariable Integer id, @RequestBody Account account){
-       return accountService.updatedAccount(id, account);
+    public AccountResponse updatedAccount(@PathVariable Integer id, @RequestBody AccountRequest request) {
+        return accountService.updatedAccount(id, request);
     }
 
     @DeleteMapping("/{id}")
-    public String deletedAccount(@PathVariable Integer id){
+    public String deletedAccount(@PathVariable Integer id) {
         accountService.deletedAccount(id);
         return "Deleted success";
     }
